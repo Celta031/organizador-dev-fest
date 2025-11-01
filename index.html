@@ -1,31 +1,81 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Organize sua grade personalizada para o DevFest e compartilhe com amigos!" />
     <title>Meu Organizador de Grade - DevFest</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/main.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
+    <header>
+      <h1>Meu Organizador de Grade</h1>
+      <p class="subtitle">Clique nas palestras para montar sua grade personalizada. Use o botão direito do mouse para remover.</p>
+    </header>
 
-    <h1>Meu Organizador de Grade</h1>
-    <p>Clique nas palestras na paleta à direita para montar sua grade personalizada no template.</p>
+    <main>
+      <!-- Controles e Filtros -->
+      <section class="controls-section" aria-label="Controles e filtros">
+        <div class="search-container">
+          <label for="search-input" class="sr-only">Buscar palestras</label>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Buscar palestras... (Ctrl+K)"
+            aria-label="Buscar palestras por título ou trilha"
+            autocomplete="off"
+          />
+          <span class="search-icon" aria-hidden="true">🔍</span>
+        </div>
 
-    <div class="app-container">
-        
-        <div id="schedule-builder">
-            
-            <div class="placeholder-slot" id="slot-1000"></div> <div class="placeholder-slot" id="slot-1050"></div> <div class="placeholder-slot" id="slot-1140"></div> <div class="placeholder-slot" id="slot-1340"></div> <div class="placeholder-slot" id="slot-1430"></div> <div class="placeholder-slot" id="slot-1520"></div> </div>
+        <div class="filter-container" role="toolbar" aria-label="Filtrar por trilha">
+          <button class="filter-btn active" data-filter="all" aria-pressed="true">Todas</button>
+          <button class="filter-btn" data-filter="Iniciante" aria-pressed="false">Iniciante</button>
+          <button class="filter-btn" data-filter="Avançado" aria-pressed="false">Avançado</button>
+          <button class="filter-btn" data-filter="Carreiras" aria-pressed="false">Carreiras</button>
+          <button class="filter-btn" data-filter="Workshop" aria-pressed="false">Workshop</button>
+          <button class="filter-btn" data-filter="WTM" aria-pressed="false">WTM</button>
+          <button class="filter-btn" data-filter="Onfly" aria-pressed="false">Onfly</button>
+        </div>
+      </section>
 
-        <div id="talk-palette">
-            <h2>Escolha suas palestras:</h2>
-            </div>
+      <!-- Container Principal -->
+      <div class="app-container">
+        <!-- Grade de Horários -->
+        <div id="schedule-builder" role="region" aria-label="Grade de palestras selecionadas">
+          <div class="placeholder-slot" id="slot-1000" aria-label="Slot vazio - Clique em uma palestra para adicionar"></div>
+          <div class="placeholder-slot" id="slot-1050" aria-label="Slot vazio - Clique em uma palestra para adicionar"></div>
+          <div class="placeholder-slot" id="slot-1140" aria-label="Slot vazio - Clique em uma palestra para adicionar"></div>
+          <div class="placeholder-slot" id="slot-1340" aria-label="Slot vazio - Clique em uma palestra para adicionar"></div>
+          <div class="placeholder-slot" id="slot-1430" aria-label="Slot vazio - Clique em uma palestra para adicionar"></div>
+          <div class="placeholder-slot" id="slot-1520" aria-label="Slot vazio - Clique em uma palestra para adicionar"></div>
+        </div>
 
-    </div>
+        <!-- Paleta de Palestras -->
+        <div id="talk-palette" role="region" aria-label="Lista de palestras disponíveis">
+          <h2>Escolha suas palestras:</h2>
+        </div>
+      </div>
 
-    <button id="download-btn">Baixar Minha Grade (PNG)</button>
+      <!-- Botões de Ação -->
+      <section class="actions-section" aria-label="Ações">
+        <div class="button-group">
+          <button id="download-btn" class="btn btn-primary" aria-label="Baixar grade como imagem PNG">📥 Baixar Minha Grade</button>
+          <button id="clear-all-btn" class="btn btn-secondary" aria-label="Limpar toda a grade">🗑️ Limpar Tudo</button>
+          <button id="share-btn" class="btn btn-success" aria-label="Compartilhar grade">🔗 Compartilhar</button>
+        </div>
+      </section>
+    </main>
 
-    <script src="script.js"></script>
-</body>
+    <footer>
+      <p>Design por <a href="https://www.linkedin.com/in/juliarobertasouza/" target="_blank" rel="noopener noreferrer">Júlia Roberta Souza</a></p>
+      <p>Design do site por <a href="https://www.linkedin.com/in/lucelho/" target="_blank" rel="noopener noreferrer">Lucelho Silva</a></p>
+    </footer>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
 </html>

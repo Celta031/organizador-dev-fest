@@ -1,0 +1,19 @@
+/* ============================================
+   ARQUIVO PRINCIPAL DE ESTILOS
+   Importa todos os módulos CSS na ordem correta
+   ============================================ */
+
+/* 1. Base - Variáveis, Reset e Estilos Fundamentais */
+@import url('./base/variables.css');
+@import url('./base/base.css');
+@import url('./base/responsive.css');
+
+/* 2. Layout - Estrutura da Página */
+@import url('./layout/layout.css');
+
+/* 3. Componentes - Elementos da Interface */
+@import url('./components/controls.css');
+@import url('./components/schedule.css');
+@import url('./components/palette.css');
+@import url('./components/buttons.css');
+@import url('./components/modals.css');

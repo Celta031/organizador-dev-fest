@@ -1,0 +1,80 @@
+/* ============================================
+   CONTROLES E FILTROS
+   ============================================ */
+.controls-section {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Busca */
+.search-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto 20px;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 14px 50px 14px 18px;
+  font-size: 1rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.search-container input:focus {
+  outline: none;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 1.2rem;
+}
+
+/* Filtros */
+.filter-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-light);
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(10px);
+}
+
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.filter-btn.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+}

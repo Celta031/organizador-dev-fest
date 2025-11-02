@@ -1,0 +1,70 @@
+/* ============================================
+   GRADE DE HORÁRIOS
+   ============================================ */
+#schedule-builder {
+  width: 360px;
+  height: 640px;
+  background-image: url('../../assets/template-base.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: var(--card-bg);
+  position: relative;
+  border: none;
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+#schedule-builder.capturing {
+  box-shadow: none;
+}
+
+/* Slots */
+.placeholder-slot {
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  left: 24px;
+  width: 317px;
+  height: 64px;
+  transition: height var(--transition-normal), opacity var(--transition-normal);
+  cursor: pointer;
+}
+
+.placeholder-slot.slot-occupied {
+  cursor: context-menu;
+}
+
+.placeholder-slot.slot-fade-in {
+  animation: fadeIn var(--transition-normal);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Posições dos slots */
+#slot-1000 { top: 120px; }
+#slot-1050 { top: 190px; }
+#slot-1140 { top: 260px; }
+#slot-1340 { top: 330px; }
+#slot-1430 { top: 400px; }
+#slot-1520 { top: 470px; }
+
+/* Workshop slots */
+.placeholder-slot.workshop-slot {
+  height: 130px !important;
+  z-index: 10;
+}
+
+.placeholder-slot.workshop-hidden {
+  display: none;
+}

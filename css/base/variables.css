@@ -1,0 +1,45 @@
+/* ============================================
+   VARIÁVEIS CSS
+   ============================================ */
+:root {
+  /* Cores principais */
+  --primary-color: #4285f4;
+  --primary-dark: #1967d2;
+  --primary-light: #669df6;
+
+  /* Cores secundárias */
+  --secondary-color: #ea4335;
+  --accent-color: #fbbc04;
+  --success-color: #34a853;
+  --error-color: #ea4335;
+  --warning-color: #fbbc04;
+  --info-color: #4285f4;
+
+  /* Cores de fundo */
+  --bg-gradient-start: #a8dadc;
+  --bg-gradient-end: #457b9d;
+  --card-bg: #ffffff;
+
+  /* Cores de texto */
+  --text-color: #202124;
+  --text-secondary: #5f6368;
+  --text-light: #ffffff;
+
+  /* Bordas */
+  --border-color: #dadce0;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  /* Transições */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Border radius */
+  --border-radius: 12px;
+  --border-radius-sm: 8px;
+  --border-radius-lg: 16px;
+}

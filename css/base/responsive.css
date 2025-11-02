@@ -1,0 +1,152 @@
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+
+/* Tablets */
+@media (max-width: 768px) {
+  header {
+    padding: 40px 20px 30px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .app-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #schedule-builder {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    aspect-ratio: 9 / 16;
+  }
+
+  #talk-palette {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    max-height: 640px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .filter-container {
+    gap: 8px;
+  }
+
+  .filter-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  header {
+    padding: 30px 15px 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  main {
+    padding: 0 15px 30px;
+  }
+
+  .search-container input {
+    padding: 10px 40px 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  #talk-palette {
+    max-height: 500px;
+  }
+
+  .talk-palette-scroll {
+    padding: 15px;
+  }
+
+  .talk-item {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .track-badge {
+    display: block;
+    margin-left: 0;
+    margin-top: 5px;
+    width: fit-content;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .toast {
+    min-width: 250px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .app-container {
+    flex-direction: row;
+  }
+
+  #schedule-builder {
+    max-width: 280px;
+  }
+
+  #talk-palette {
+    max-height: 400px;
+    height: 400px;
+  }
+}
+
+/* Print */
+@media print {
+  .controls-section,
+  .actions-section,
+  footer {
+    display: none;
+  }
+
+  #talk-palette {
+    display: none;
+  }
+
+  #schedule-builder {
+    box-shadow: none;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

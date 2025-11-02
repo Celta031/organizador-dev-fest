@@ -16,7 +16,7 @@
       "cardImage": "./assets/cards/1000_carreiras.png"
     },
     {
-      "title": "Docker para Iniciantes (Workshop 10:00-11:40)",
+      "title": "Docker para Iniciantes",
       "track": "Workshop",
       "cardImage": "./assets/cards/1000_workshop.png",
       "isWorkshop": true
@@ -103,7 +103,7 @@
       "cardImage": "./assets/cards/1340_carreiras.png"
     },
     {
-      "title": "Arquitetura Frontend Moderna (Workshop 13:40-15:20)",
+      "title": "Arquitetura Frontend Moderna",
       "track": "Workshop",
       "cardImage": "./assets/cards/1340_workshop.png",
       "isWorkshop": true

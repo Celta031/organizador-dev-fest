@@ -19,6 +19,10 @@
   --bg-gradient-start: #a8dadc;
   --bg-gradient-end: #457b9d;
   --card-bg: #ffffff;
+  --card-bg-item: #ffffff; 
+  --card-bg-item-hover: #f8f9fa; 
+  --card-bg-search: rgba(255, 255, 255, 0.95); 
+  --card-bg-search-focus: #ffffff; 
 
   /* Cores de texto */
   --text-color: #202124;
@@ -42,4 +46,61 @@
   --border-radius: 12px;
   --border-radius-sm: 8px;
   --border-radius-lg: 16px;
+
+  /* Para a barra de scroll */
+  --scrollbar-track-bg: #f1f1f1;
+
+  --item-border: 1px solid transparent;
+  --item-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+body.dark-mode {
+  /* Cores de fundo */
+  --bg-gradient-start: #1e3c72; /* Gradiente escuro */
+  --bg-gradient-end: #171717;
+  --card-bg: #2d2d30; /* Fundo dos cards (paleta) */
+  --card-bg-item: #3c3c3e; /* Fundo do item de palestra */
+  --card-bg-item-hover: #4a4a4c;
+  --card-bg-search: rgba(45, 45, 48, 0.95); /* Fundo da busca */
+  --card-bg-search-focus: #2d2d30;
+
+  /* Cores de texto */
+  --text-color: #e8eaed; /* Texto principal (claro) */
+  --text-secondary: #9aa0a6; /* Texto secundário (claro) */
+  --text-light: #ffffff; /* (Mantém) */
+
+  /* Bordas */
+  --border-color: #5f6368;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.35);
+
+  /* Cores do Filtro (Botões de filtro no dark mode) */
+  --filter-btn-bg: rgba(255, 255, 255, 0.1);
+  --filter-btn-border: rgba(255, 255, 255, 0.2);
+  --filter-btn-hover-bg: rgba(255, 255, 255, 0.15);
+  --filter-btn-hover-border: rgba(255, 255, 255, 0.3);
+
+  /* Para a barra de scroll */
+  --scrollbar-track-bg: #424242;
+
+  --item-border: 1px solid #5f6368;
+  --item-shadow: none;
+}
+
+/*
+  Transições suaves de cor ao trocar o tema
+*/
+body {
+  transition: background var(--transition-normal), color var(--transition-normal);
+}
+
+#talk-palette,
+.talk-item,
+.search-container input,
+.filter-btn {
+  transition: background var(--transition-normal), background-color var(--transition-normal), border-color var(--transition-normal);
 }

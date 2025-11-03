@@ -7,7 +7,7 @@
   background-image: url('../../assets/template-base.png');
   background-size: cover;
   background-repeat: no-repeat;
-  background-color: var(--card-bg);
+  background-color: #ffffff;
   position: relative;
   border: none;
   box-shadow: var(--shadow-lg);

@@ -19,7 +19,7 @@
   font-weight: 500;
   margin: 0;
   padding: 20px 20px 15px 20px;
-  background: #ffffff;
+  background: var(--card-bg);
   border-bottom: 1px solid var(--border-color);
   flex-shrink: 0;
   border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
@@ -48,18 +48,18 @@
 .talk-item {
   padding: 14px 16px;
   margin-bottom: 12px;
-  background-color: #ffffff;
-  border: none;
+  background-color: var(--card-bg-item);
+  border: var(--item-border);
   border-radius: var(--border-radius-sm);
   border-left: 4px solid var(--primary-color);
   cursor: pointer;
   transition: all var(--transition-fast);
   position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--item-shadow);
 }
 
 .talk-item:hover {
-  background-color: #f8f9fa;
+  background-color: var(--card-bg-item-hover);
   transform: translateX(6px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-left-width: 5px;
@@ -114,7 +114,7 @@
 }
 
 .talk-palette-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--scrollbar-track-bg);
   border-radius: 10px;
 }
 

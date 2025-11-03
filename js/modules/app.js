@@ -13,7 +13,7 @@ import {
   decodeScheduleData,
   createElement
 } from '../utils/utils.js';
-import { saveSchedule, loadSchedule, clearSchedule } from './storage.js';
+import { saveSchedule, loadSchedule, clearSchedule, savePreferences, loadPreferences } from './storage.js';
 import { showToast, showLoading, showConfirmModal, updateSlotIndicator } from './ui.js';
 
 /**
@@ -28,8 +28,10 @@ export class DevFestScheduler {
     this.selectedTalks = {};
     this.currentFilter = 'all';
     this.searchTerm = '';
+    this.currentTheme = 'light';
 
     this.initializeElements();
+    this.loadTheme();
     this.loadData();
   }
 
@@ -44,6 +46,7 @@ export class DevFestScheduler {
     this.scheduleBuilder = document.getElementById('schedule-builder');
     this.searchInput = document.getElementById('search-input');
     this.filterButtons = document.querySelectorAll('.filter-btn');
+    this.themeToggleBtn = document.getElementById('theme-toggle-btn');
   }
 
   /**
@@ -130,6 +133,9 @@ export class DevFestScheduler {
     this.clearBtn?.addEventListener('click', () => this.handleClearAll());
     this.shareBtn?.addEventListener('click', () => this.handleShare());
 
+    // Toggle tema
+    this.themeToggleBtn?.addEventListener('click', () => this.toggleTheme());
+
     // Busca com debounce
     if (this.searchInput) {
       const debouncedSearch = debounce(() => this.handleSearch(), CONSTANTS.ANIMATION.DEBOUNCE_DELAY);
@@ -141,6 +147,46 @@ export class DevFestScheduler {
       btn.addEventListener('click', (e) => this.handleFilter(e));
     });
 
+  }
+
+  loadTheme() {
+    const prefs = loadPreferences();
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // O tema salvo tem prioridade, se não houver, usa a preferência do sistema
+    this.currentTheme = prefs.theme || (systemPrefersDark ? 'dark' : 'light');
+    
+    this.applyTheme();
+  }
+
+  /**
+   * Aplica o tema (dark/light) ao body e salva a preferência
+   */
+  applyTheme() {
+    if (this.currentTheme === 'dark') {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+
+    // Atualiza o aria-label do botão para acessibilidade
+    if (this.themeToggleBtn) {
+      this.themeToggleBtn.setAttribute('aria-label', 
+        this.currentTheme === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro'
+      );
+    }
+
+    // Salva a preferência no localStorage
+    savePreferences({ theme: this.currentTheme });
+  }
+
+  /**
+   * Alterna entre os temas
+   */
+  toggleTheme() {
+    this.currentTheme = (this.currentTheme === 'light') ? 'dark' : 'light';
+    this.applyTheme();
+    showToast(`Modo ${this.currentTheme === 'dark' ? 'Escuro' : 'Claro'} ativado!`, 'info', 1500);
   }
 
   /**

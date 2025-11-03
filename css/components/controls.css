@@ -21,16 +21,17 @@
   padding: 14px 50px 14px 18px;
   font-size: 1rem;
   border: none;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--card-bg-search);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-card);
   transition: all var(--transition-fast);
   font-family: inherit;
+  color: var(--text-color);
 }
 
 .search-container input:focus {
   outline: none;
-  background: #ffffff;
+  background: var(--card-bg-search-focus);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   transform: translateY(-1px);
 }
@@ -42,6 +43,7 @@
   transform: translateY(-50%);
   pointer-events: none;
   font-size: 1.2rem;
+  color: var(--text-secondary);
 }
 
 /* Filtros */
@@ -57,8 +59,8 @@
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-light);
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: var(--filter-btn-bg, rgba(255, 255, 255, 0.2));
+  border: 2px solid var(--filter-btn-border, rgba(255, 255, 255, 0.3));
   border-radius: var(--border-radius-lg);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -66,8 +68,8 @@
 }
 
 .filter-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--filter-btn-hover-bg, rgba(255, 255, 255, 0.3));
+  border-color: var(--filter-btn-hover-border, rgba(255, 255, 255, 0.5));
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

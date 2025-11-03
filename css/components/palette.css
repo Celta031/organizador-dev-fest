@@ -101,12 +101,12 @@
   color: white;
 }
 
-.track-badge.track-iniciante { background-color: #34a853; }
-.track-badge.track-avancado { background-color: #ea4335; }
-.track-badge.track-carreiras { background-color: #fbbc04; color: #202124; }
-.track-badge.track-workshop { background-color: #9c27b0; }
-.track-badge.track-wtm { background-color: #4285f4; }
-.track-badge.track-onfly { background-color: #5f6368; }
+.track-badge.track-iniciante { background-color: #6AA84F; }
+.track-badge.track-avancado { background-color: #2163CE; }
+.track-badge.track-carreiras { background-color: #FF5858; }
+.track-badge.track-workshop { background-color: #FF9900; }
+.track-badge.track-wtm { background-color: #BE60DC; }
+.track-badge.track-onfly { background-color: #009EFB; }
 
 /* Scrollbar customizada */
 .talk-palette-scroll::-webkit-scrollbar {

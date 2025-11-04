@@ -146,7 +146,9 @@ Este projeto é open source e está disponível sob a licença MIT.
 **Design Visual:** Todo o design, incluindo o template base e os cards de palestras, foi criado por **Júlia Roberta Souza**.
 - **LinkedIn:** [linkedin.com/in/juliarobertasouza](https://www.linkedin.com/in/juliarobertasouza/)
 
-**Desenvolvimento e Melhorias:** Código desenvolvido e aprimorado com foco em usabilidade, acessibilidade e performance.
+**Desenvolvimento e Melhorias:** Código desenvolvido e aprimorado com foco em usabilidade, acessibilidade e performance por:
+- **Lucelho Silva** - [linkedin.com/in/lucelhosilva](https://www.linkedin.com/in/lucelhosilva)
+- **Wesley Raphael Martins** - [linkedin.com/in/wesleyraphaelmartins](https://www.linkedin.com/in/wesleyraphaelmartins)
 
 ## 🆕 Changelog
 

@@ -37,8 +37,9 @@ export function showToast(message, type = 'info', duration = 3000) {
 /**
  * Mostra spinner de loading
  * @param {boolean} show - Se deve mostrar ou esconder
+ * @param {string} message - Mensagem opcional de loading
  */
-export function showLoading(show = true) {
+export function showLoading(show = true, message = 'Carregando') {
   let spinner = document.getElementById('loading-spinner');
 
   if (show) {
@@ -47,9 +48,16 @@ export function showLoading(show = true) {
         id: 'loading-spinner',
         className: 'loading-spinner',
         role: 'status',
-        'aria-label': 'Carregando'
-      }, '<div class="spinner"></div>');
+        'aria-label': message
+      }, `<div class="spinner"></div><p class="loading-message">${message}</p>`);
       document.body.appendChild(spinner);
+    } else {
+      // Atualiza mensagem se já existe
+      const messageEl = spinner.querySelector('.loading-message');
+      if (messageEl) {
+        messageEl.textContent = message;
+      }
+      spinner.setAttribute('aria-label', message);
     }
     spinner.classList.add('show');
   } else {

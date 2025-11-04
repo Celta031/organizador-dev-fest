@@ -15,7 +15,7 @@ import {
 } from '../utils/utils.js';
 import { saveSchedule, loadSchedule, clearSchedule, savePreferences, loadPreferences } from './storage.js';
 import { showToast, showLoading, showConfirmModal, updateSlotIndicator } from './ui.js';
-
+import { generateICS, downloadFile } from './calendar.js';
 /**
  * Classe principal da aplicação
  */
@@ -47,6 +47,7 @@ export class DevFestScheduler {
     this.searchInput = document.getElementById('search-input');
     this.filterButtons = document.querySelectorAll('.filter-btn');
     this.themeToggleBtn = document.getElementById('theme-toggle-btn');
+    this.calendarBtn = document.getElementById('calendar-btn');
   }
 
   /**
@@ -132,6 +133,7 @@ export class DevFestScheduler {
     this.downloadBtn?.addEventListener('click', () => this.downloadSchedule());
     this.clearBtn?.addEventListener('click', () => this.handleClearAll());
     this.shareBtn?.addEventListener('click', () => this.handleShare());
+    this.calendarBtn?.addEventListener('click', () => this.handleExportCalendar());
 
     // Toggle tema
     this.themeToggleBtn?.addEventListener('click', () => this.toggleTheme());
@@ -601,5 +603,56 @@ export class DevFestScheduler {
       showToast('Erro ao copiar link.', 'error');
     }
   }
+  async handleExportCalendar() {
+    // Verifica se há palestras selecionadas
+    if (Object.keys(this.selectedTalks).length === 0) {
+      showToast('Sua grade está vazia. Adicione algumas palestras!', 'warning');
+      return;
+    }
+    
+    showConfirmModal(
+      // A mensagem
+      "Você baixará um arquivo <strong>.ics</strong>. <br><br>Este é o formato universal. Após o download, basta clicar no arquivo para importar <strong>toda a sua grade</strong> no seu aplicativo preferido (Google Agenda, Outlook, Calendário Apple, etc.).",
+      // O callback de confirmação
+      () => {
+        this.executeCalendarExport();
+      },
+      null, // Sem callback de cancelamento
+      "Baixar e Importar"
+    );
+  }
+
+  async executeCalendarExport() {
+    showLoading(true);
+    try {
+      // Passa todos os horários para a função, para que ela possa calcular as durações
+      const allTimes = Object.keys(this.talksData);
+
+      // Gera o conteúdo do arquivo .ics
+      const icsContent = generateICS(
+        this.selectedTalks,
+        this.talksData,
+        CONSTANTS.CALENDAR.EVENT_DATE,
+        allTimes,
+        CONSTANTS.CALENDAR.DEFAULT_DURATION_MINUTES
+      );
+
+      // Inicia o download
+      downloadFile(
+        icsContent,
+        CONSTANTS.CALENDAR.FILENAME,
+        'text/calendar;charset=utf-8' // mime-type correto
+      );
+
+      showLoading(false);
+      showToast('Calendário exportado! Abra o arquivo para importar.', 'success');
+
+    } catch (error) {
+      showLoading(false);
+      console.error('Erro ao gerar calendário:', error);
+      showToast('Erro ao gerar o calendário. Tente novamente.', 'error');
+    }
+  }
+
 }
 

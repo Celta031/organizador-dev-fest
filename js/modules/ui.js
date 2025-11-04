@@ -65,8 +65,9 @@ export function showLoading(show = true) {
  * @param {string} message - Mensagem a ser exibida
  * @param {Function} onConfirm - Callback ao confirmar
  * @param {Function} onCancel - Callback ao cancelar
+ * @param {string} [confirmText='Confirmar']
  */
-export function showConfirmModal(message, onConfirm, onCancel = null) {
+export function showConfirmModal(message, onConfirm, onCancel = null, confirmText = 'Confirmar') {
   const modal = createElement('div', {
     className: 'modal-overlay',
     role: 'dialog',
@@ -97,7 +98,7 @@ export function showConfirmModal(message, onConfirm, onCancel = null) {
   const confirmBtn = createElement('button', {
     className: 'btn btn-primary',
     type: 'button'
-  }, 'Confirmar');
+  }, confirmText);
 
   cancelBtn.addEventListener('click', () => {
     modal.remove();

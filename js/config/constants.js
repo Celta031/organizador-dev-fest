@@ -48,5 +48,11 @@ export const CONSTANTS = {
   URLS: {
     DATA: './data/talks.json',
     SHARE_BASE: window.location.origin + window.location.pathname
+  },
+
+  CALENDAR: {
+    EVENT_DATE: '2025-11-08', // IMPORTANTE: Defina a data do evento aqui (AAAA-MM-DD)
+    DEFAULT_DURATION_MINUTES: 50, // Duração de um slot padrão
+    FILENAME: 'minha-grade-devfest-bh.ics'
   }
 };

@@ -80,3 +80,33 @@
   border-color: var(--primary-dark);
   box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
 }
+.filter-btn[data-filter="Iniciante"].active {
+  background-color: #6AA84F;
+  border-color: #589142;
+  box-shadow: 0 4px 12px rgba(106, 168, 79, 0.3);
+}
+.filter-btn[data-filter="Avançado"].active {
+  background-color: #2163CE;
+  border-color: #1b50a8;
+  box-shadow: 0 4px 12px rgba(33, 99, 206, 0.3);
+}
+.filter-btn[data-filter="Carreiras"].active {
+  background-color: #FF5858;
+  border-color: #e04a4a;
+  box-shadow: 0 4px 12px rgba(255, 88, 88, 0.3);
+}
+.filter-btn[data-filter="Workshop"].active {
+  background-color: #FF9900;
+  border-color: #d98200;
+  box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
+}
+.filter-btn[data-filter="WTM"].active {
+  background-color: #BE60DC;
+  border-color: #a352bc;
+  box-shadow: 0 4px 12px rgba(190, 96, 220, 0.3);
+}
+.filter-btn[data-filter="Onfly"].active {
+  background-color: #009EFB;
+  border-color: #0086d4;
+  box-shadow: 0 4px 12px rgba(0, 158, 251, 0.3);
+}

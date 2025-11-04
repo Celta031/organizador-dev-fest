@@ -6,7 +6,6 @@
 /* 1. Base - Variáveis, Reset e Estilos Fundamentais */
 @import url('./base/variables.css');
 @import url('./base/base.css');
-@import url('./base/responsive.css');
 
 /* 2. Layout - Estrutura da Página */
 @import url('./layout/layout.css');
@@ -18,3 +17,6 @@
 @import url('./components/buttons.css');
 @import url('./components/modals.css');
 @import url('./components/theme-toggle.css');
+
+/* 4. RESPONSIVIDADE */
+@import url('./base/responsive.css');

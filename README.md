@@ -141,14 +141,23 @@ O projeto foi desenvolvido seguindo boas práticas de desenvolvimento:
 
 Este projeto é open source e está disponível sob a licença MIT.
 
-## ✨ Créditos
+## 💖 Agradecimentos e Créditos
 
-**Design Visual:** Todo o design, incluindo o template base e os cards de palestras, foi criado por **Júlia Roberta Souza**.
-- **LinkedIn:** [linkedin.com/in/juliarobertasouza](https://www.linkedin.com/in/juliarobertasouza/)
+Este projeto é uma iniciativa open-source nascida na comunidade **[GDG - BH](https://gdgbh.com.br/)** e desenvolvida com dedicação para o DevFest 2025.
 
-**Desenvolvimento e Melhorias:** Código desenvolvido e aprimorado com foco em usabilidade, acessibilidade e performance por:
-- **Lucelho Silva** - [linkedin.com/in/lucelhosilva](https://www.linkedin.com/in/lucelhosilva)
-- **Wesley Raphael Martins** - [linkedin.com/in/wesleyraphaelmartins](https://www.linkedin.com/in/wesleyraphaelmartins)
+Um agradecimento especial aos principais responsáveis por tirar esta ideia do papel:
+
+* **Design Visual (Template e Cards):**
+    * **Júlia Roberta Souza** - [LinkedIn](https://www.linkedin.com/in/juliarobertasouza)
+
+* **Desenvolvimento Principal (Lógica):**
+    * **Wesley Raphael Martins** - [LinkedIn](https://www.linkedin.com/in/wesleyraphaelmartins)
+
+* **Desenvolvimento e Melhorias:**
+    * **Lucelho Silva** - [LinkedIn](https://www.linkedin.com/in/lucelhosilva)
+
+* **Apoio e Idealização:**
+    * A todos os membros da comunidade **GDG - BH** que contribuíram com ideias, testes e feedback.
 
 ## 🆕 Changelog
 

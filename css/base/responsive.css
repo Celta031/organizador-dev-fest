@@ -48,6 +48,23 @@
 
   .filter-container {
     gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 4px 0 10px 0;
+  }
+
+  .filter-container::-webkit-scrollbar {
+    height: 4px;
+    background: transparent;
+  }
+  .filter-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  .filter-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
   }
 
   .filter-btn {

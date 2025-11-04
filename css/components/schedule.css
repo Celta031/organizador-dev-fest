@@ -5,7 +5,8 @@
   width: 360px;
   height: 640px;
   background-image: url('../../assets/template-base.png');
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
   background-repeat: no-repeat;
   background-color: #ffffff;
   position: relative;
@@ -25,9 +26,9 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  left: 24px;
-  width: 317px;
-  height: 64px;
+  left: 6.666%;
+  width: 88.055%;
+  height: 10%;
   transition: height var(--transition-normal), opacity var(--transition-normal);
   cursor: pointer;
 }
@@ -52,16 +53,16 @@
 }
 
 /* Posições dos slots */
-#slot-1000 { top: 120px; }
-#slot-1050 { top: 190px; }
-#slot-1140 { top: 260px; }
-#slot-1340 { top: 330px; }
-#slot-1430 { top: 400px; }
-#slot-1520 { top: 470px; }
+#slot-1000 { top: 18.75%; }
+#slot-1050 { top: 29.6875%; }
+#slot-1140 { top: 40.625%; }
+#slot-1340 { top: 51.5625%; }
+#slot-1430 { top: 62.5%; }
+#slot-1520 { top: 73.4375%; }
 
 /* Workshop slots */
 .placeholder-slot.workshop-slot {
-  height: 130px !important;
+  height: 20.3125% !important;
   z-index: 10;
 }
 

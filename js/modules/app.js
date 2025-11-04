@@ -568,39 +568,94 @@ export class DevFestScheduler {
   }
 
   /**
-   * Compartilha grade
+   * Compartilha grade como imagem
    */
-  handleShare() {
-    const url = generateShareUrl(
-      { selectedTalks: this.selectedTalks },
-      CONSTANTS.URLS.SHARE_BASE
-    );
+  async handleShare() {
+    try {
+      showLoading(true, 'Gerando imagem para compartilhar...');
+      this.scheduleBuilder.classList.add('capturing');
 
-    if (navigator.share) {
-      navigator.share({
-        title: 'Minha Grade - DevFest',
-        text: 'Confira minha grade personalizada do DevFest!',
-        url: url
-      }).catch(err => {
-        if (err.name !== 'AbortError') {
-          this.copyShareUrl(url);
-        }
+      // Gera o canvas da grade
+      const canvas = await html2canvas(this.scheduleBuilder, {
+        useCORS: true,
+        allowTaint: true,
+        scale: CONSTANTS.CAPTURE.SCALE
       });
-    } else {
-      this.copyShareUrl(url);
+
+      this.scheduleBuilder.classList.remove('capturing');
+
+      // Converte canvas para blob
+      const blob = await new Promise(resolve => {
+        canvas.toBlob(resolve, 'image/png');
+      });
+
+      const shareText = `🚀 Montei minha grade personalizada do DevFest 2025!
+
+🎯 Vem conferir as palestras que escolhi e monte a sua também!
+
+💡 Não perca as novidades da maior conferência de tecnologia do Google! Junte-se à nossa comunidade e fique por dentro de tudo sobre IA, Cloud, Mobile e muito mais!
+
+👉 Monte sua grade em: https://celta031.github.io/organizador-dev-fest/`;
+
+      // Tenta compartilhar a imagem usando Web Share API
+      if (navigator.canShare && navigator.canShare({ files: [new File([blob], 'minha-grade-devfest.png', { type: 'image/png' })] })) {
+        const file = new File([blob], 'minha-grade-devfest.png', { type: 'image/png' });
+
+        await navigator.share({
+          title: 'Minha Grade Personalizada - DevFest 2025',
+          text: shareText,
+          files: [file]
+        });
+
+        showLoading(false);
+        showToast('Imagem compartilhada com sucesso!', 'success');
+      } else {
+        // Fallback: tenta copiar a imagem para área de transferência
+        showLoading(false);
+        await this.copyImageToClipboard(blob, shareText);
+      }
+    } catch (error) {
+      console.error('Erro ao compartilhar:', error);
+      this.scheduleBuilder.classList.remove('capturing');
+      showLoading(false);
+
+      // Se falhar, oferece download
+      if (error.name !== 'AbortError') {
+        showToast('Não foi possível compartilhar. Baixando a imagem...', 'info');
+        this.downloadSchedule();
+      }
     }
   }
 
   /**
-   * Copia URL de compartilhamento
-   * @param {string} url
+   * Copia imagem para área de transferência
+   * @param {Blob} blob - Blob da imagem
+   * @param {string} shareText - Texto de compartilhamento
    */
-  async copyShareUrl(url) {
+  async copyImageToClipboard(blob, shareText) {
     try {
-      await navigator.clipboard.writeText(url);
-      showToast('Link copiado para a área de transferência!', 'success');
+      // Tenta copiar a imagem para a área de transferência
+      const clipboardItem = new ClipboardItem({
+        'image/png': blob
+      });
+
+      await navigator.clipboard.write([clipboardItem]);
+      showToast('Imagem copiada! Cole no WhatsApp, Instagram ou onde preferir!', 'success', 3000);
+
+      // Também copia o texto em seguida
+      setTimeout(async () => {
+        try {
+          await navigator.clipboard.writeText(shareText);
+          showToast('Texto também copiado! Cole junto com a imagem!', 'info', 3000);
+        } catch (err) {
+          console.error('Erro ao copiar texto:', err);
+        }
+      }, 1000);
     } catch (error) {
-      showToast('Erro ao copiar link.', 'error');
+      console.error('Erro ao copiar imagem:', error);
+      // Se não conseguir copiar, baixa a imagem
+      showToast('Não foi possível copiar. Baixando a imagem...', 'info');
+      this.downloadSchedule();
     }
   }
   async handleExportCalendar() {

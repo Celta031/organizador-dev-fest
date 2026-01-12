@@ -23,13 +23,15 @@ export function debounce(func, wait) {
 
 /**
  * Creates a memoized version of a function
+ * Optimized for functions with primitive arguments (strings, numbers)
  * @param {Function} fn - Function to memoize
  * @returns {Function} Memoized function
  */
 export function memoize(fn) {
   const cache = new Map();
   return function(...args) {
-    const key = JSON.stringify(args);
+    // Simple key for primitive arguments - more efficient than JSON.stringify
+    const key = args.length === 1 ? args[0] : args.join('|');
     if (cache.has(key)) {
       return cache.get(key);
     }

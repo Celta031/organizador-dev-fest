@@ -134,7 +134,9 @@ export class DevFestScheduler {
     Object.keys(this.talksData).forEach(timeSlot => {
       this.talksData[timeSlot].forEach(talk => {
         const talkId = createTalkId(timeSlot, talk.title);
-        this.talkIdToTalkMap.set(talkId, { ...talk, timeSlot });
+        // Store reference to original object with timeSlot for efficient lookup
+        // Avoids unnecessary object creation
+        this.talkIdToTalkMap.set(talkId, { talk, timeSlot });
       });
     });
   }
@@ -286,10 +288,11 @@ export class DevFestScheduler {
     const scrollContainer = this.palette.querySelector('.talk-palette-scroll');
     if (!scrollContainer) return;
     
-    // Remove old listener if exists
-    if (this._paletteKeyHandler) {
-      scrollContainer.removeEventListener('keydown', this._paletteKeyHandler);
-    }
+    // Clean up old listener before attaching new one
+    this.cleanupPaletteKeyboardHandlers();
+    
+    // Store reference for proper cleanup
+    this._paletteScrollContainer = scrollContainer;
     
     // Single listener for all talk items
     this._paletteKeyHandler = (e) => {
@@ -303,6 +306,16 @@ export class DevFestScheduler {
     };
     
     scrollContainer.addEventListener('keydown', this._paletteKeyHandler);
+  }
+  
+  /**
+   * Cleanup keyboard handlers
+   * Ensures no memory leaks from event listeners
+   */
+  cleanupPaletteKeyboardHandlers() {
+    if (this._paletteKeyHandler && this._paletteScrollContainer) {
+      this._paletteScrollContainer.removeEventListener('keydown', this._paletteKeyHandler);
+    }
   }
 
   /**
@@ -567,9 +580,10 @@ export class DevFestScheduler {
     
     Object.entries(this.selectedTalks).forEach(([timeSlot, talkId]) => {
       // Use indexed lookup - O(1) instead of O(n)
-      const talk = this.talkIdToTalkMap.get(talkId);
-      if (!talk) return;
-
+      const talkData = this.talkIdToTalkMap.get(talkId);
+      if (!talkData) return;
+      
+      const talk = talkData.talk;
       const slotId = 'slot-' + timeSlot.replace(':', '');
       const placeholder = document.getElementById(slotId);
       if (!placeholder) return;

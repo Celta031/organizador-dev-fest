@@ -30,8 +30,9 @@ export function debounce(func, wait) {
 export function memoize(fn) {
   const cache = new Map();
   return function(...args) {
-    // Simple key for primitive arguments - more efficient than JSON.stringify
-    const key = args.length === 1 ? args[0] : args.join('|');
+    // Use a separator unlikely to appear in normal strings to prevent collisions
+    // For single arg (most common case), use directly for best performance
+    const key = args.length === 1 ? args[0] : args.join('\x00');
     if (cache.has(key)) {
       return cache.get(key);
     }

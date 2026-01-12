@@ -134,8 +134,8 @@ export class DevFestScheduler {
     Object.keys(this.talksData).forEach(timeSlot => {
       this.talksData[timeSlot].forEach(talk => {
         const talkId = createTalkId(timeSlot, talk.title);
-        // Store reference to original object with timeSlot for efficient lookup
-        // Avoids unnecessary object creation
+        // Store reference with timeSlot for efficient lookup
+        // Small object wrapper keeps code clear while maintaining performance
         this.talkIdToTalkMap.set(talkId, { talk, timeSlot });
       });
     });
@@ -301,7 +301,8 @@ export class DevFestScheduler {
       
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        this.handleTalkClick({ target: talkItem });
+        // Pass element directly - handleTalkClick now handles both events and elements
+        this.handleTalkClick(talkItem);
       }
     };
     
@@ -344,10 +345,13 @@ export class DevFestScheduler {
 
   /**
    * Manipula clique em palestra
-   * @param {Event} event
+   * Accepts either an Event object or an element directly
+   * @param {Event|Object} eventOrElement - Event object or object with target property
    */
-  handleTalkClick(event) {
-    const talkElement = event.target.closest('.talk-item');
+  handleTalkClick(eventOrElement) {
+    // Support both event objects and synthetic objects from keyboard handler
+    const target = eventOrElement.target || eventOrElement;
+    const talkElement = target.closest ? target.closest('.talk-item') : target;
     if (!talkElement) return;
 
     const { cardImage, timeSlot, isWorkshop, talkId } = talkElement.dataset;

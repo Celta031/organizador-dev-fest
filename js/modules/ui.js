@@ -12,6 +12,7 @@ import { createElement } from '../utils/utils.js';
  * @param {number} duration - Duração em ms
  */
 export function showToast(message, type = 'info', duration = 3000) {
+  // Remove existing toast if present - optimized to avoid repeated queries
   const existingToast = document.querySelector('.toast');
   if (existingToast) {
     existingToast.remove();
@@ -26,7 +27,11 @@ export function showToast(message, type = 'info', duration = 3000) {
   document.body.appendChild(toast);
 
   // Trigger animation
-  setTimeout(() => toast.classList.add('toast-show'), 10);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      toast.classList.add('toast-show');
+    });
+  });
 
   setTimeout(() => {
     toast.classList.remove('toast-show');

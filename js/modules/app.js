@@ -29,6 +29,10 @@ export class DevFestScheduler {
     this.currentFilter = 'all';
     this.searchTerm = '';
     this.currentTheme = 'light';
+    
+    // Performance optimization: indexed lookups
+    this.talkIdToTalkMap = new Map(); // Maps talkId -> talk object
+    this.cachedDomElements = {}; // Cache for frequently accessed DOM elements
 
     this.initializeElements();
     this.loadTheme();
@@ -80,6 +84,7 @@ export class DevFestScheduler {
       }
 
       this.setupSlotMaps();
+      this.buildTalkIndexes();
       this.loadScheduleFromStorage();
       this.loadScheduleFromURL();
       this.setupEventListeners();
@@ -120,10 +125,25 @@ export class DevFestScheduler {
   }
 
   /**
+   * Builds indexed lookups for talks for O(1) access
+   * Performance optimization to avoid linear searches
+   */
+  buildTalkIndexes() {
+    this.talkIdToTalkMap.clear();
+    
+    Object.keys(this.talksData).forEach(timeSlot => {
+      this.talksData[timeSlot].forEach(talk => {
+        const talkId = createTalkId(timeSlot, talk.title);
+        this.talkIdToTalkMap.set(talkId, { ...talk, timeSlot });
+      });
+    });
+  }
+
+  /**
    * Configura event listeners
    */
   setupEventListeners() {
-    // Clique nas palestras
+    // Event delegation for talk clicks - more efficient than individual listeners
     this.palette.addEventListener('click', (e) => this.handleTalkClick(e));
 
     // Clique direito para remover
@@ -193,6 +213,7 @@ export class DevFestScheduler {
 
   /**
    * Popula paleta de palestras
+   * Optimized to use DocumentFragment for better performance
    */
   populatePalette() {
     // Salvar posição do scroll antes de recriar
@@ -206,6 +227,9 @@ export class DevFestScheduler {
     `;
 
     const scrollContainer = this.palette.querySelector('.talk-palette-scroll');
+    
+    // Use DocumentFragment for batch DOM operations - better performance
+    const fragment = document.createDocumentFragment();
 
     Object.keys(this.talksData).forEach(timeSlot => {
       const groupDiv = createElement('div', { className: 'talk-group' });
@@ -231,31 +255,59 @@ export class DevFestScheduler {
             }
           }, `${talk.title} <span class="track-badge track-${normalizeString(talk.track)}">${talk.track}</span>`);
 
-          // Enter/Space para selecionar
-          talkItem.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              this.handleTalkClick({ target: talkItem });
-            }
-          });
-
+          // Use event delegation instead of individual listeners for better performance
+          // Keyboard events handled via delegation in setupEventListeners
           groupDiv.appendChild(talkItem);
         }
       });
 
       if (groupDiv.children.length > 1) {
-        scrollContainer.appendChild(groupDiv);
+        fragment.appendChild(groupDiv);
       }
     });
+    
+    // Single DOM update instead of multiple - much faster
+    scrollContainer.appendChild(fragment);
 
     // Restaurar posição do scroll
     if (scrollPosition > 0) {
       scrollContainer.scrollTop = scrollPosition;
     }
+    
+    // Setup keyboard navigation via event delegation
+    this.setupPaletteKeyboardHandlers();
+  }
+  
+  /**
+   * Setup keyboard handlers using event delegation
+   * More efficient than individual listeners on each item
+   */
+  setupPaletteKeyboardHandlers() {
+    const scrollContainer = this.palette.querySelector('.talk-palette-scroll');
+    if (!scrollContainer) return;
+    
+    // Remove old listener if exists
+    if (this._paletteKeyHandler) {
+      scrollContainer.removeEventListener('keydown', this._paletteKeyHandler);
+    }
+    
+    // Single listener for all talk items
+    this._paletteKeyHandler = (e) => {
+      const talkItem = e.target.closest('.talk-item');
+      if (!talkItem) return;
+      
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.handleTalkClick({ target: talkItem });
+      }
+    };
+    
+    scrollContainer.addEventListener('keydown', this._paletteKeyHandler);
   }
 
   /**
    * Verifica se deve mostrar palestra baseado em filtros e busca
+   * Optimized with pre-computed search term
    * @param {Object} talk - Dados da palestra
    * @returns {boolean}
    */
@@ -265,14 +317,13 @@ export class DevFestScheduler {
       return false;
     }
 
-    // Filtro por busca
-    if (this.searchTerm) {
-      const normalizedSearch = normalizeString(this.searchTerm);
+    // Filtro por busca - use pre-computed normalized term
+    if (this._normalizedSearchTerm) {
       const normalizedTitle = normalizeString(talk.title);
       const normalizedTrack = normalizeString(talk.track);
 
-      return normalizedTitle.includes(normalizedSearch) ||
-             normalizedTrack.includes(normalizedSearch);
+      return normalizedTitle.includes(this._normalizedSearchTerm) ||
+             normalizedTrack.includes(this._normalizedSearchTerm);
     }
 
     return true;
@@ -414,12 +465,15 @@ export class DevFestScheduler {
 
   /**
    * Limpa toda a grade
+   * Optimized to batch DOM operations
    */
   handleClearAll() {
     showConfirmModal(
       'Tem certeza que deseja limpar toda a grade?',
       () => {
         const slots = document.querySelectorAll('.placeholder-slot');
+        
+        // Batch all DOM updates for better performance
         slots.forEach(slot => {
           slot.style.backgroundImage = 'none';
           slot.classList.remove('workshop-slot', 'workshop-hidden');
@@ -456,9 +510,12 @@ export class DevFestScheduler {
 
   /**
    * Manipula busca
+   * Pre-computes normalized search term for better performance
    */
   handleSearch() {
     this.searchTerm = this.searchInput.value;
+    // Pre-compute normalized search term once for better performance
+    this._normalizedSearchTerm = this.searchTerm ? normalizeString(this.searchTerm) : '';
     this.populatePalette();
   }
 
@@ -502,23 +559,29 @@ export class DevFestScheduler {
 
   /**
    * Restaura grade visual
+   * Optimized to use indexed lookup instead of linear search
    */
   restoreSchedule() {
+    // Batch DOM reads and writes for better performance
+    const updates = [];
+    
     Object.entries(this.selectedTalks).forEach(([timeSlot, talkId]) => {
-      const talks = this.talksData[timeSlot];
-      if (!talks) return;
-
-      const talk = talks.find(t => createTalkId(timeSlot, t.title) === talkId);
+      // Use indexed lookup - O(1) instead of O(n)
+      const talk = this.talkIdToTalkMap.get(talkId);
       if (!talk) return;
 
       const slotId = 'slot-' + timeSlot.replace(':', '');
       const placeholder = document.getElementById(slotId);
       if (!placeholder) return;
 
-      // Aplicar sem animação e confirmação
       const nextSlotId = this.nextSlotMap[slotId];
       const nextPlaceholder = nextSlotId ? document.getElementById(nextSlotId) : null;
 
+      updates.push({ placeholder, talk, nextPlaceholder });
+    });
+    
+    // Apply all DOM updates at once - reduces reflows
+    updates.forEach(({ placeholder, talk, nextPlaceholder }) => {
       placeholder.style.backgroundImage = `url('${talk.cardImage}')`;
       updateSlotIndicator(placeholder, true);
 

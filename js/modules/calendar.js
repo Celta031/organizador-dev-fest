@@ -3,6 +3,8 @@
  * @module calendar
  */
 
+import { normalizeString, createTalkId } from '../utils/utils.js';
+
 const SLOT_END_TIMES = {
   '10:00': '10:50',
   '10:50': '11:40',
@@ -38,21 +40,8 @@ function formatDateToICS(date) {
  */
 function getTalkDetails(timeSlot, talkId, talksData) {
   if (!talksData[timeSlot]) return null;
-  return talksData[timeSlot].find(t => 
-    `${timeSlot}-${normalizeString(t.title).replace(/\s+/g, '-')}` === talkId
-  );
-}
-
-/**
- * Função duplicada para manter o módulo independente
- * @param {string} str 
- * @returns {string}
- */
-function normalizeString(str) {
-  return str
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
+  // Use the imported createTalkId for consistency
+  return talksData[timeSlot].find(t => createTalkId(timeSlot, t.title) === talkId);
 }
 
 /**

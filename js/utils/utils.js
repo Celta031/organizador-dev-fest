@@ -22,16 +22,37 @@ export function debounce(func, wait) {
 }
 
 /**
+ * Creates a memoized version of a function
+ * @param {Function} fn - Function to memoize
+ * @returns {Function} Memoized function
+ */
+export function memoize(fn) {
+  const cache = new Map();
+  return function(...args) {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    const result = fn.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+}
+
+/**
  * Normaliza string para busca (remove acentos e converte para lowercase)
+ * Memoized for better performance with repeated calls
  * @param {string} str - String a ser normalizada
  * @returns {string} String normalizada
  */
-export function normalizeString(str) {
+const _normalizeString = (str) => {
   return str
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
-}
+};
+
+export const normalizeString = memoize(_normalizeString);
 
 /**
  * Valida se um objeto de palestra tem todos os campos necessários
@@ -49,13 +70,16 @@ export function validateTalk(talk) {
 
 /**
  * Cria um ID único para uma palestra
+ * Memoized for better performance
  * @param {string} timeSlot - Horário da palestra
  * @param {string} title - Título da palestra
  * @returns {string} ID único
  */
-export function createTalkId(timeSlot, title) {
+const _createTalkId = (timeSlot, title) => {
   return `${timeSlot}-${normalizeString(title).replace(/\s+/g, '-')}`;
-}
+};
+
+export const createTalkId = memoize(_createTalkId);
 
 /**
  * Codifica dados para URL
